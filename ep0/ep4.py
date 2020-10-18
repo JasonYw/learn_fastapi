@@ -6,11 +6,16 @@ from typing import Optional
 app =FastAPI()
 
 class Item(BaseModel):
+    '''
+        from pydantic import Field
+        Filed将声明pydantic模型内部的生命校验和元数据
+    '''
     name:str
     title:str=Field(
         None,title='the title of the item',max_length=50
     )
     price:float=Field(...,gt=0)
+
 
 @app.put("/items/{item_id}")
 async def put_items(item_id:int,item_profile:Item=Body(...,embed=True)):
