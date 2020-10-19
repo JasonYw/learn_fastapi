@@ -40,6 +40,13 @@ class Userout(BaseModel):
     email:EmailStr
     full_name:str =None
 
+class UserInDB(BaseModel):
+    username:str
+    hashed_password :str
+    email:EmailStr
+    full_name:str =None
+
+
 @app.post("/user/",response_model=Userout)
 def create_user(*,user:Userin):
     '''
@@ -87,5 +94,26 @@ def get_fruitprice(item_id:str):
     返回的内容除了name字段的值 其余全部返回
     '''
     return items.get(item_id)
+
+
+
+
+def fake_password_hasher(raw_password:str):
+    return "supersecret" + raw_password
+
+def fake_save_user(user_in:Userin):
+    hashed_password =fake_password_hasher(user_in.password)
+    user_in_db =UserInDB(**user_in.dict(),hashed_password=hashed_password)
+    print("User saved!")
+    return user_in_db
+
+@app.post("/fakeuser/",response_model=Userout,response_model_exclude_unset=True)
+async def create_user_fake(user_in:Userin):
+    user_saved =fake_save_user(user_in)
+    return user_saved
+
+
+
+
 if __name__ == "__main__":
     uvicorn.run(app,host="127.0.0.1",port=8000)
