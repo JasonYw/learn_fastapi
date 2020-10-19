@@ -157,8 +157,8 @@ def get_userinfo(user_id:int,school_num:int,age:Optional[int] =None,email:str =N
 
 
 
-# if __name__ == "__main__":
-#     uvicorn.run(app,host="127.0.0.1",port=8000)
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)
 
 
 #安装服务器

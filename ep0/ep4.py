@@ -2,6 +2,7 @@ from fastapi import FastAPI,Query,Body,Path
 from pydantic import BaseModel
 from pydantic import Field
 from typing import Optional
+import uvicorn
 
 app =FastAPI()
 
@@ -25,7 +26,8 @@ async def put_items(item_id:int,item_profile:Item=Body(...,embed=True)):
     }
     return result
 
-
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)
 
 
 

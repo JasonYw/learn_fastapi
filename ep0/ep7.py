@@ -1,5 +1,6 @@
 from fastapi import FastAPI,Cookie,Header
 from typing import Optional,List
+import uvicorn
 
 app =FastAPI()
 
@@ -29,3 +30,5 @@ async def read_headerlist(x_tocken:List[str] =Header(None)):
     '''
     return {"x_tocken":x_tocken}
 
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)

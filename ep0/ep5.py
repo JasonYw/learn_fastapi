@@ -2,6 +2,7 @@ from fastapi import FastAPI,Query,Path,Body
 from typing import List,Optional,Set,Dict
 from pydantic import Field,BaseModel
 from pydantic import HttpUrl
+import uvicorn
 
 app =FastAPI()
 
@@ -83,3 +84,5 @@ async def update_config(item_id:int,item:example=Body(...,example={"name":"foo",
     }
     return result
 
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)

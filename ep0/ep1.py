@@ -2,6 +2,7 @@ from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 from enum import Enum
+import uvicorn
 
 app =FastAPI()
 
@@ -79,4 +80,5 @@ async def create_pjp(item_id:int,item:item_pjpmodel,page:int,age:int =None):
         item_dict.update({'age':age})
     return item_dict
 
-  
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)

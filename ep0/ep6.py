@@ -3,6 +3,7 @@ from pydantic import BaseModel,Field
 from typing import Set,List,Optional
 from datetime import datetime,time,timedelta
 from uuid import UUID
+import uvicorn
 
 app =FastAPI()
 
@@ -27,3 +28,5 @@ async def read_items(
     return{
         "uuid":item_id
     }
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)

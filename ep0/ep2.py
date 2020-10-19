@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from fastapi import Query
 from typing import List
 from typing import Optional
+import uvicorn
 
 app =FastAPI()
 
@@ -72,3 +73,5 @@ async def get_itemsalias(q:Optional[str] =Query(None,alias="item-query")):
         return {'q':q}
     return '200'
 
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)

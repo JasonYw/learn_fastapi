@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from fastapi import Path
 from fastapi import Query
 from fastapi import Body
+import uvicorn
 app =FastAPI()
 
 '''
@@ -152,3 +153,5 @@ def put_bodysingnal(*,item_id:int =Path(...,lt=100,gt=1),item_sg:singal =Body(..
         'profile':item_sg
     }
     return result
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)

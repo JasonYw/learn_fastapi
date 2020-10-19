@@ -1,6 +1,7 @@
 from typing import List,Optional
 from fastapi import FastAPI
 from pydantic import BaseModel,EmailStr
+import uvicorn
 
 app =FastAPI()
 
@@ -86,3 +87,5 @@ def get_fruitprice(item_id:str):
     返回的内容除了name字段的值 其余全部返回
     '''
     return items.get(item_id)
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)
