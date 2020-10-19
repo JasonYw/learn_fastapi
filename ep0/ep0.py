@@ -155,7 +155,11 @@ def get_userinfo(user_id:int,school_num:int,age:Optional[int] =None,email:str =N
         userinfo.update({"age":age})
     return userinfo
 
-
+'''
+post请求中，可以使用data传递参数，也可以使用json传递参数，那么这两种方式有什么区别呢？
+如果参数为JSON数据，可以直接传入json参数，它将自动编码并将Content-Type的置为application/json
+如果data传递的参数为字符串，例如【json.dumps(payload)】，则request对参数进行url编码,Content-Type的值为None,所以data传字符串时，一定要在header中指定Content-Type
+'''
 
 if __name__ == "__main__":
     uvicorn.run(app,host="127.0.0.1",port=8000)
