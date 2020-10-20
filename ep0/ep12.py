@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
+from starlette.requests import Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import PlainTextResponse
+
 
 app =FastAPI()
 '''
-错误处理 未完成
+错误处理 未完成 跳过 以后再看！
 '''
 
 items ={"foo":"the foo"}
@@ -30,13 +34,21 @@ class UnicornException(Exception):
 
 @app.exception_handler(UnicornException)
 async def unicorn_exception_handler(request:Request,exc:UnicornException):
+    '''
+    from starlette.requests import Request
+    '''
     return JSONResponse(
         status_code=418,
         content={"message":f"Oops! {exc.name} did something. There goes a rainbow..."},
     )
 
-@app.exception_handler(RequestVilidationError)
+@app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request,exc):
+    '''
+    当请求包含无效数据时，fastapi内部引发RequestVilidationError
+    from fastapi.exceptions import RequestValidationError
+    覆盖默认的错误
+    '''
     return PlainTextResponse(str(exc),status_code=400)
 
 @app.get("/unicorns/{name}")
