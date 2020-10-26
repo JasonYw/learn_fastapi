@@ -22,7 +22,7 @@ class Item(BaseModel):
 )
 async def create_item(item:Item):
     '''
-    tags,标签，用于'/doces/'
+    tags,标签，用于'/doces/',参数后面跟list
     summary 摘要
     description 描述
     response_description 回应描述
