@@ -99,7 +99,6 @@ def get_itemchoice(name:str,q:Optional[str] =None,short:bool =False):
         short 的默认值为bool类型,False,也可以为0，no，false，off这些都等同于False，True等用于yes，1，true，on
         dict.update() 函数相当于往dict里添加键值对
         optional与可选参数没关系 与参数类型有关系
-        optional是针对那些使用mypy的报错的情况使用的
     '''
     item ={"name":name}
     if q:
