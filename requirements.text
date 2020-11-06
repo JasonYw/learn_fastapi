@@ -1,0 +1,7 @@
+jwt
+fastapi
+starlette 
+passlib
+pydantic
+uvicorn
+python-multipart
