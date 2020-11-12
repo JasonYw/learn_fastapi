@@ -1,6 +1,6 @@
 from datetime import datetime,timedelta
 import jwt
-from fastapi import Denpends,FastAPI,HTTPException
+from fastapi import Depends,FastAPI,HTTPException
 from starlette import status
 from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
 from passlib.context import CryptContext
@@ -78,4 +78,24 @@ async def get_current_user(token:str =Denpends(oauth2_scheme)):
     try:
         payload =jwt.decode(token,SECURET_KEY,algorithms=[ALGORITHM])
         username:str =payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data =TokenData(username=username)
+    except:
+        raise credentials_exception
+    user =get_user(fake_user_db,username=token_data.usernmae)
+    if user is None:
+        raise credentials_exception
+    return user
         
+async def get_current_user(current_user:User =Denpends(get_current_user)):
+    if current_user.disabled:
+        raise  HTTPException(status_code=400,detail="Inactive user")
+    return current_user
+
+@app.post("/token",response_model=Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm =Denpends()):
+    user =authenticate_user(fake_user_db,form_data.username,form_data.password)
+    access_token_expires =timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token =create_access_token(data={"sub":user.name},expires_data=access_token_expires)
+    return {"access_token":access_token,"token_type":"bearer"}
