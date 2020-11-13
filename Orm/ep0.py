@@ -90,9 +90,9 @@ def read_user(user_id:int,db:Session=Depends(get_db)):
     print(db_user)
     if db_user is None:
         raise HTTPException(status_code=404,detail="User not found")
-    return db_user
+    return get_user_info(db=db,user_email=db_user.email)
 
 if __name__ == "__main__":
     for i in get_db():
-        c =get_user_id(db=i,user_email="root@root.com")
+        c =get_user_info(db=i,user_email="root@root.com")
         print(c.id)
